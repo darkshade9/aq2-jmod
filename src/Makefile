@@ -3,12 +3,12 @@
 # Intended for gcc/Linux, may need modifying for other platforms
 #
 
-ARCH=x86_64
+ARCH=i386
 CC=gcc
 BASE_CFLAGS=-Dstricmp=strcasecmp
 
 #use these cflags to optimize it
-CFLAGS=$(BASE_CFLAGS) -O6 -ffast-math -funroll-loops \
+CFLAGS=$(BASE_CFLAGS) -march=i486 -O6 -ffast-math -funroll-loops \
 	-fomit-frame-pointer -fexpensive-optimizations -falign-loops=2 \
 	-falign-jumps=2 -falign-functions=2
 #use these when debugging 
