@@ -1,0 +1,1181 @@
+/  ^J Mod Manual File
+/
+/  Modify this as you wish. Update the version to something and add your name
+/  to the Editors list in the Version tag below also
+/
+/  Syntax:
+/    ]keyword            (Length < 64)
+/    }syntax keyword <#> (Length < 512 for all but keywords)
+/    text line 1
+/    text line 2
+/    text .........
+/    }for word word word word
+/    }see keyword2 keyword3
+/
+/    ]keyword2
+/    text..........
+/
+/    ]keyword3
+/    }link keyword2
+/    /*
+/    ]keyword4
+/    this will not be read
+/    */
+/
+/
+/  Lines beginning with / are comments and will not be parsed
+/  Lines between a line with /* and a line with */ are comments and will not be parsed
+/  Lines beginning with ] are case-insensitive keywords
+/  Lines beginning with } are parser extras
+/  There must be no space between a ] or } and its following word
+/
+/  }syntax - syntax of the command (may be multiple }syntax lines)
+/          - No special formatting required
+/
+/  }for    - space separated single-word list used by "for" searches
+/          - }for general info menu
+/          - keep words singular ("trail" instead of "trails")
+/
+/  }see    - list of other keywords pertaining to the current command
+/          - }see word, multi word, word, word, ...
+/
+/  }link   - redirects to another keyword
+/          - }link keyword
+/          - }link multi keyword
+/
+/----------------------------------------------------------------------------------
+
+]Version
+^J Mod Manual V1.01
+Editors: PaTMaN^J
+Last Edit Date/Time: July 16, 2006, 8:57PM GMT-05:00
+Target ^J Mod Version: V1.23.03
+
+
+/----------------------------------------------
+/  PLAYER COMMANDS                      START
+/----------------------------------------------
+
+]players
+}syntax players
+Displays a list of the players on or connecting to the server
+}see playerlist, spectators
+}for info
+
+
+]say
+}syntax say [message]
+Send a message to all players on the server
+}for talk
+
+
+]say_team
+}link say
+}for talk
+
+
+]score
+}syntax score
+Displays a modified scoreboard
+The board lists players connected along with their Time Connected, ID, Ping, and Gravity
+}see gravity, grenadejumplist
+}for info
+
+
+]help
+}link inven
+}for info
+
+
+]use
+}syntax use <"special"/"jump marker"/weapon_name>
+Switches your weapon
+"special" will cycle through the weapons forward
+"jump marker" is the only new weapon added
+}see markers, jump marker
+}for weapon
+
+
+]noclip
+}syntax noclip
+Toggles noclip mode
+In noclip mode, you can float around and move through objects
+When in noclip mode, your player model will glow green
+}for movement
+
+
+]inven
+}syntax inven
+Toggles the in-game menu system
+Items beginning with -> lead to the next sub-menu
+Items beginning with <- lead to the previous menu
+Text in parenthesis () are binding commands
+}see invnext, invprev, invnextw, invprevw, invnextp, invprevp, invuse
+}for menu
+
+
+]invnext
+}syntax invnext
+}see inven
+}for menu
+
+
+]invprev
+}syntax invprev
+}see inven
+}for menu
+
+
+]invnextw
+}syntax invnextw
+}see inven
+}for menu
+
+
+
+]invprevw
+}syntax invprevw
+}see inven
+}for menu
+
+
+]invnextp
+}syntax invnextp
+}see inven
+}for menu
+
+
+]invprevp
+}syntax invprevp
+}see inven
+}for menu
+
+
+]invuse
+}syntax invuse
+Selects the item in a menu
+}for menu
+
+
+]weapprev
+}syntax weapprev
+Switches to the previous weapon in line
+}for weapon
+
+
+]weapnext
+}syntax weapnext
+Switches to the next weapon in line
+}for weapon
+
+
+]weaplast
+}syntax weaplast
+Switches to the weapon you were last holding before switching
+}for weapon
+
+
+]putaway
+}syntax putaway
+Closes the menu system, help, and scores, if any were open
+}for menu
+
+
+]wave
+}syntax wave <0-4>
+Plays a player model wave animation
+}for animation
+
+
+]weapon
+}syntax weapon
+Switches your current weapon's attack mode
+}see lens
+}for weapon
+
+
+]opendoor
+}syntax opendoor
+Manipulates any nearby doors
+}for actions
+
+
+]lens
+}syntax lens [(0)/2/4/6/in/out]
+Zooms your sniper rifle to the specified zoom level
+"in" zooms in one level
+"out" zooms out one level
+}see weapon
+}for weapon sniper
+
+
+]playerlist
+}syntax playerlist
+Displays a listing of players connected, their time on the server, and their current ping
+}see players, spectators
+}for info
+
+
+]spectators
+}syntax spectators
+Displays a list of players spectating, if any, and some extra info
+}for info
+}see tog spectator, spectator
+
+
+]motd
+}syntax motd
+Displays the server join message, or MOTD
+}for server info
+}see version
+
+
+]gravity
+}syntax gravity [#]
+}syntax gravity default
+View, set, of reset your gravity
+When changing your gravity, it is announced to the entire server
+}for movement
+
+
+]demomode
+}syntax demomode
+Clears all of the HUD stats for cleaner demo recording
+}for hud demo record
+
+]rhs
+Resets the high speed display on the HUD
+}for hud demo record
+
+
+]lca
+}syntax lca
+Initiates a "LIGHTS, CAMERA, ACTION!" teamplay round start sequence so you can practice start jumps
+Combine this with a spawnp for good practice (ex: bind space "spawnp;lca")
+}for movement
+}see spawnp
+
+
+]spawnp
+}syntax spawnp [#]
+Sends you to a random spawn point or specific spawn point with #
+}for spawn teleport movement
+}see spawnc, goto, teleporter
+
+]spawnc
+}syntax spawnc
+Sends you to the closest spawn point
+}for spawn teleport movement
+}see spawnp, goto, teleporter
+
+]goto
+}syntax goto <#> <#> <#>
+Teleports you to the coordinates you specify (ex: goto -135 544 64)
+}syntax goto trail start
+Teleports you to the start of the trail you are pointing at
+}syntax goto trail end
+Teleports you to the end of the trail you are pointing at
+}for spawn teleport movement
+}see spawnp, spawnc, teleporter
+
+]teleporter
+}syntax teleporter set
+}syntax teleporter recall
+Sets a teleporter destination
+Recalls you to the teleporter destination set
+}for teleport movement
+}see spawnp, spawnc, goto
+
+
+]trailcount
+}syntax trailcount
+Displays the total number of trail links set in the level
+}for trail info
+
+]trailwidth
+}syntax trailwidth <#>
+Sets the width of your jump trail (regular is 4)
+}for trail
+
+]trailcolor
+}syntax trailcolor <color>
+Change the color of your trail links
+Colors are: green, blue, yellow, white, orange, black, and red
+}syntax trailcolor change <color>
+Changes the color of the trail you are pointing at, if any
+}for trail color
+
+]jtrailsave
+}link tsave
+
+]tsave
+}syntax tsave <all/view/last> <filename>
+"all" saves all trails on the map to <filename>
+"view" saves all trails in your current view to <filename>
+"last" saves your last trail to <filename>
+}for trail save
+}see flist, fload
+
+
+]remalltrails
+}syntax remalltrails
+Removes all the jump trails from the level
+}for trail remove
+}see remlasttrail, rempointtrail, remviewlinks, remviewtrails, remtouchtrail
+
+]remlasttrail
+}syntax remlasttrail
+Removes the last jump trail that you created
+}for trail remove
+}see remalltrails, rempointtrail, remviewlinks, remviewtrails, remtouchtrail
+
+]rempointtrail
+}syntax rempointtrail
+Removes the jump trail that you are currently pointing at (based on best pointing at)
+}for trail remove
+}see remalltrails, remlasttrail, remviewlinks, remviewtrails, remtouchtrail
+
+]remviewlinks
+}syntax remviewlinks
+Removes all the jump trail links in your view (trail is then relinked)
+}for trail link remove
+}see remalltrails, remlasttrail, rempointtrail, remviewtrails, remtouchtrail
+
+]remviewtrails
+}syntax remviewtrails
+Removes all the jump trails in your view (the full trail)
+}for trail remove
+}see remalltrails, remlasttrail, rempointtrail, remviewlinks, remtouchtrail
+
+]remtouchtrail
+}syntax remtouchtrail
+Removes the jump trail that you are currently touching
+}for trail remove
+}see remalltrails, remlasttrail, rempointtrail, remviewlinks, remviewtrails
+
+
+]cleanalltrails
+}syntax cleanalltrails
+Cleans all the jump trails in the level
+}for trail clean
+}see cleanpointtrail, cleanviewlinks, cleanviewtrails, cleantouchtrail, cleanlasttrail
+
+]cleanpointtrail
+}syntax cleanpointtrail
+Cleans the jump trail that you are currently pointing at (based on best pointing at)
+}for trail clean
+}see cleanalltrails, cleanviewlinks, cleanviewtrails, cleantouchtrail, cleanlasttrail
+
+]cleanviewlinks
+}syntax cleanviewlinks
+Cleans all the jump trail links in your view
+}for trail clean
+}see cleanalltrails, cleanpointtrail, cleanviewtrails, cleantouchtrail, cleanlasttrail
+
+]cleanviewtrails
+}syntax cleanviewtrails
+Cleans all the jump trails in your view (the full trail)
+}for trail clean
+}see cleanalltrails, cleanpointtrail, cleanviewlinks, cleantouchtrail, cleanlasttrail
+
+]cleantouchtrail
+}syntax cleantouchtrail
+Cleans the jump trail that you are currently touching
+}for trail clean
+}see cleanalltrails, cleanpointtrail, cleanviewlinks, cleanviewtrails, cleanlasttrail
+
+]cleanlasttrail
+}syntax cleanlasttrail
+Cleans the last jump trail that you created
+}for trail clean
+}see cleanalltrails, cleanpointtrail, cleanviewlinks, cleanviewtrails, cleantouchtrail
+
+
+]jlocsave
+}link msave
+
+]msave
+}syntax msave all <filename>
+Saves all markers on the level to <filename>
+}syntax msave view <filename>
+Saves all markers in your view to <filename>
+}for marker save
+}see use jump marker, fload, flist
+
+]markercolor
+}syntax markercolor <color>
+Change the color of your thrown markers
+Colors are: red, green, blue, yellow, white, purple, and aqua
+}for marker color
+}see jumpmarkercolor, fallmarkercolor, use jump marker
+
+]jumpmarkercolor
+}syntax jumpmarkercolor <color>
+Change the color of your jump markers
+Colors are: red, green, blue, yellow, white, purple, and aqua
+}for marker color
+}see markercolor, fallmarkercolor, use jump marker
+
+]fallmarkercolor
+}syntax fallmarkercolor <color>
+Change the color of your fall markers
+Colors are: red, green, blue, yellow, white, purple, and aqua
+}for marker color
+}see markercolor, jumpmarkercolor, use jump marker
+
+]namemarker
+}syntax namemarker [text]
+Attaches a text string to a marker (40 Character max per marker)
+You must be pointing at a marker when using this command
+If you do not specify [text], any message attached to the marker will be erased
+}for marker, use jump marker
+
+]remviewmarkers
+}syntax remviewmarkers
+Removes all markers in your view
+}for maker
+}see remallmarkers, use jump marker
+
+]remallmarkers
+}syntax remallmarkers
+Removes all the markers from the map
+}for marker
+}see remviewmarkers, use jump marker
+
+]markercount
+}syntax markercount
+Displays the total number of markers set in the level
+}for marker info
+
+
+]cleanlevel
+}syntax cleanlevel
+Removes all markers/trails/knives on the map
+This should be used if an out of control overflow ever occurs
+}see overflow marker trail knife
+}for overflow
+
+
+]votemap
+}syntax votemap <name>
+Votes for a map if it exists
+You can do this multiple times to change your vote
+}for map vote
+}see viewvotes, mapvotes
+
+]viewvotes
+}syntax viewvotes
+Displays the current stats of a map vote, if a vote is in progress
+}for map vote
+}see votemap, mapvotes
+
+]mapvotes
+}link viewvotes
+
+
+]puppet
+}syntax puppet
+Create or Remove your puppet
+}for puppet
+}see for puppet
+
+]pswitch
+}syntax pswitch
+Switch positions with your puppet
+This can be used to quickly modify the puppet's position for setting up
+}for puppet
+}see for puppet
+
+]puppetshootarea
+}syntax puppetshootarea <area>
+Set your puppet to aim at a specific area of you
+<area> can be head, chest, stomach, legs, or random
+}for puppet attack shoot
+}see for puppet
+
+]psave
+}syntax psave <filename>
+Saves your puppet demo to the server
+These files are saved in action/puppetdemo
+}for puppet demo file save
+}see for puppet, fdownload
+
+]pclear
+}syntax pclear
+Clears your loaded puppet demo
+}for puppet demo playback
+}see for playback, for puppet
+
+]precord
+}syntax precord
+Starts recording a puppet demo
+}for puppet demo playback
+}see for playback, for puppet
+
+]pstop
+}syntax pstop
+Stops recording a puppet demo
+Stops playing a puppet demo
+}for puppet demo playback
+}see for playback, for puppet
+
+]pplay
+}syntax pplay
+Plays your loaded or recorded puppet demo
+}for puppet demo playback
+}see for playback, for puppet
+
+]ps-
+}syntax ps-
+Decreases the speed of your running puppet demo
+Speed range is from 0.1x to 1x
+}for puppet demo playback
+}see for playback, for puppet
+
+]ps+
+}syntax ps+
+Increases the speed of your running puppet demo
+Speed range is from 0.1x to 1x
+}for puppet demo playback
+}see for playback, for puppet
+
+]pspause
+}syntax pspause
+Pauses your running puppet demo
+}for puppet demo playback
+}see for playback, for puppet
+
+]psstep-
+}syntax pstep-
+Steps 1 frame backward in your running puppet demo
+The step amount reflects the puppet speed
+}for puppet demo playback
+}see for playback, for puppet
+
+]psstep+
+}syntax pstep+
+Steps 1 frame forward in your running puppet demo
+The step amount reflects the puppet speed
+}for puppet demo playback
+}see for playback, for puppet
+
+
+]fb_menu_max
+}syntax fb_menu_max <1-15>
+Max items to display per page for the menu file browser
+Set this lower if characters are missing from the menu
+}for menu file browser
+}see inven
+
+]fb_con_max
+}syntax fb_con_max <1-15>
+Max items to display per page for the console file browser
+Set this lower if overflows occur with flist
+}for file browser console
+}see flist
+
+
+]flist
+}syntax flist <type> [page # (1)]
+Console style file browser which displays more info on files than the menu style file browser
+<type> can be "marker" "trail" or "puppet"
+}for server mark trail puppet demo
+}see fdownload
+
+]fload
+}syntax fload <type> <filename>
+}syntax fload flist <type> <file #>
+Loads files
+Trails load 10 nodes per second to avoid overflows
+Markers load 10 per second to avoid overflows
+
+Special syntax for loading trails from puppet demos:
+}syntax fload puppet <filename> trail [clean amount (0)] [color ("green")] [size (4)]
+}syntax fload puppet lastdemo trail [clean amount (0)] [color ("green")] [size (4)]
+Note that "lastdemo" loads the last demo you recorded, or the demo you last loaded (which ever came last)
+}syntax fload flist puppet <file #> trail [clean amount (0)] [color ("green")] [size (4)]
+}for file load puppet demo marker trail
+}see flist, finfo
+
+]finfo
+}syntax finfo <type> <filename>
+}syntax finfo flist <type> <file #>
+Displays file info
+Extent of info for puppetdemo files may differ due to changes in the file format over versions
+}for file info puppet demo marker trail
+}see flist, fload
+
+]fdownload
+}syntax fdownload <type> <filename>
+}syntax fdownload flist <type> <file #>
+Downloads files from the server
+<type> can be "marker" "trail" or "puppet"
+Server downloading must be enabled (set allow_downloading 1)
+}for server download mark trail puppet demo
+}see flist
+
+
+]jrecord
+}syntax jrecord <filename>
+This will make you record a demo and a puppet demo at the same time
+The puppet demo messages of starting/stopping will not be displayed, but it will be recording one correctly
+}for puppet demo record
+}see jstop
+
+]jstop
+}syntax jstop
+Stops recording a demo and a puppet demo, if any are being recorded
+}for puppet demo record
+}see jrecord
+
+
+]spectarg
+}syntax spectarg
+Spectates the targeted player, puppet, or pup
+You need to be in spectator mode for this to function
+}for spectator player
+}see tog spectator, spectator
+
+
+]grenadejumplist
+}syntax grenadejumplist <# # # ...>
+}syntax grenadejumplist clear
+Used to specify which client IDs can hit you with grenades, or clear the list of IDs
+As long as a client's ID is in the list, their grenades will affect you
+}for grenade jump
+}see find grenade, score
+
+
+]cvar
+}syntax cvar <inc / dec> [step (1)] [start #]
+Used to increment or decrement a numeric cvar
+}for cvar
+
+
+]man
+}syntax man <keyword>
+}syntax man for <for-keyword>
+}syntax man find "<substring>"
+Used to get help on commands or find commands
+<keyword> may include spaces without quotes
+<for-keyword> is a single word used to categorize commands
+<substring> must be enclosed in quotes if using spaces in the string
+}for help manual console
+
+
+/Toggle command listing
+
+]tog
+}syntax tog <command>
+Used to toggle certain commands
+}see find tog
+}for tog
+
+]toggle
+}link tog
+}for tog
+
+
+]tog vest
+}syntax tog vest
+Toggle usage of the Kevlar Vest
+}for tog item
+}see tog ir, tog slippers, tog silencer
+
+]tog ir
+}syntax tog ir
+Toggle usage of IR vision
+}for tog item
+}see tog vest, tog slippers, tog silencer
+
+]tog slippers
+}syntax tog slippers
+Toggle usage of Slippers
+}for tog item
+}see tog vest, tog ir, tog silencer
+
+]tog silencer
+}syntax tog silencer
+Toggle usage of the Silencer
+}for tog item
+}see tog vest, tog ir, tog slippers
+
+
+]tog spectator
+}syntax tog spectator
+Toggles spectator mode
+}see spectator
+}for spectator player movement
+
+]tog kickable
+}syntax tog kickable
+Allows you to be kicked by other players
+}for tog player movement jump
+
+]tog teamjump
+}syntax tog teamjump
+Allows you to interact with other people for team jumping
+All players participating in a teamjump must have this enabled
+This SHOULD NOT be turned on for regular jumping with others around
+}for tog player movement jump team
+
+]tog shootable
+}syntax tog shootable
+Allows you to be shot by others
+You do not lose health or get leg damage
+}for tog player movement shoot attack
+
+
+]tog grenadejump
+}syntax tog grenadejump
+Allows you to interact with your own grenades
+}for tog player movement jump grenade
+}see tog grenadejumps, grenadejumplist
+
+]tog grenadejumps
+Allows you to interact with your own and others' grenades
+}for tog player movement jump grenade
+}see tog grenadejump, grenadejumplist
+
+
+]tog markjumps
+}syntax tog markjumps
+Toggle marking of jumps with jump markers
+The jump markers will be placed when you jump and then when you land
+Fall damage does not affect this
+}for tog marker jump movement
+}see find mark, cleanlevel
+
+]tog markfalls
+}syntax tog markfalls
+Toggle marking of falls with jump markers
+The jump markers will be placed when you fall without pressing jump and then land
+Fall damage does not affect this
+}for tog marker jump movement
+}see find mark, cleanlevel
+
+]tog markerflashes
+}syntax tog markerflashes
+Toggle screen turning the color of the marker you are touching
+}for tog marker color flash
+}see find mark
+
+]tog markercolor
+}syntax tog markercolor
+Cycles your jumping marker weapon color to the next color
+Colors in order are: red, green, blue, yellow, white, purple, and aqua
+}for tog marker color
+}see find mark
+
+]tog jumpmarkercolor
+}syntax tog jumpmarkercolor
+Cycles the color of the markers placed when jumping with markjumps enabled
+Colors in order are: red, green, blue, yellow, white, purple, and aqua
+}for tog marker color
+}see find mark
+
+]tog fallmarkercolor
+}syntax tog fallmarkercolor
+Cycles the color of the markers placed when falling with markfalls enabled
+Colors in order are: red, green, blue, yellow, white, purple, and aqua
+}for tog marker color
+}see find mark
+
+
+]tog puppetsight
+}syntax tog puppetsight
+Toggles display of where your puppet is looking
+}for tog puppet
+}see find puppet
+
+]tog puppetshootarea
+}syntax tog puppetshootarea
+Cycles where your puppet aims on you
+Areas in order: Head, Chest, Stomach, Legs, and Random
+}for tog puppet attack shoot
+}see find puppet
+
+]tog puppetshoot
+}syntax tog puppetshoot
+Toggles puppet shooting
+The puppet will shoot when you attack, and with your current weapon
+}for tog puppet attack shoot
+}see find puppet
+
+]tog puppettrans
+}syntax tog puppettrans
+Toggle your puppet's transparency
+}for tog puppet
+}see find puppet
+
+]tog puppetsolid
+}syntax tog puppetsolid
+Toggle your puppet's solid state
+}for tog puppet
+}see find puppet
+
+]tog puppetsolidpplay
+}syntax tog puppetsolidpplay
+Toggle your puppet's sold state for when playing a puppet demo
+This overrides puppetsolid
+}for tog puppet
+}see find puppet, pplay
+
+
+]tog trailing
+}syntax tog trailing
+Toggles trailing
+When enabled, a trail is created respective to your movement path
+}for tog trail
+}see find trail, cleanlevel
+
+]tog trailcolor
+}syntax tog trailcolor
+Cycles your trail color
+Colors in order are: red, green, blue, yellow, white, purple, and aqua
+}for tog trail color
+}see find trail
+
+]tog trailflashes
+}syntax tog trailflashes
+Toggle screen turning the color of the trail you are touching
+}for tog trail color flash
+}see find trail
+
+
+]tog hud
+}syntax tog hud_highspeed
+Toggles display of the entire HUD
+}see find "tog hud", tog id, tog range, tog markertext
+}for tog hud
+
+]tog hud_speed
+}syntax tog hud_highspeed
+Toggles display of the HUD's Speed display
+}see find "tog hud", tog id, tog range, tog markertext
+}for tog hud
+
+]tog hud_highspeed
+}syntax tog hud_highspeed
+Toggles display of the HUD's High Speed display
+}see find "tog hud", tog id, tog range, tog markertext
+}for tog hud
+
+]tog hud_lastfalldamage
+}syntax tog hud_lastfalldamage
+Toggles display of the HUD's Last Fall Damage display
+}see find "tog hud", tog id, tog range, tog markertext
+}for tog hud
+
+]tog hud_lastfd
+}link tog hud_lastfalldamage
+}for tog hud
+
+]tog id
+}syntax tog id
+Toggles display of the player/puppet/pup ID on the HUD
+}for tog hud
+}see find "tog hud", tog range, tog markertext
+
+]tog range
+}syntax tog range
+Toggles display of the range finder on the HUD
+A negative range number means you can not walk on the surface being aimed at
+}for tog hud
+}see find "tog hud", tog id, tog markertext
+
+]tog markertext
+}syntax tog markertext
+Toggles display of any text attached to markers
+When enabled, point at a marker. If the marker has text attached to it, it will be displayed on the HUD.
+}for tog hud marker text
+}see find "tog hud", tog id, tog range
+
+]hud_speed_source
+}syntax hud_speed_source <axes>
+Sets which world axes to use for speed calculation
+Any combination of x, y, and z may be used
+Examples: x     z     xy     xyz
+}for hud speed
+}see find "tog hud"
+
+/----------------------------------------------
+/  PLAYER COMMANDS                      END
+/----------------------------------------------
+
+
+/----------------------------------------------
+/  PLAYER CVARS                         START
+/----------------------------------------------
+
+]spec
+}link spectator
+
+]spectator
+}syntax spectator <0/1>
+Set spectator state
+When spectating, some movement controls have different functions depending on your viewing mode:
+
++attack     - cycle view modes (3rd person, eyes, free)
++forward    - move towards target in 3rd person
++back       - move away from target in 3rd person
++moveleft   - cycle from eyes to 3rd person on target
++moveright  - cycle from 3rd person to eyes on target
++moveup     - cycle through targets forward (player_1, puppet_1, pup_1, player_2, ...)
++movedown   - cycle through targets backward (pup_2, puppet_2, player_2, pup_1, ...)
+
+}for spectator movement
+}see tog spectator
+
+/----------------------------------------------
+/  PLAYER CVARS                         END
+/----------------------------------------------
+
+
+/----------------------------------------------
+/  SERVER COMMANDS                      START
+/----------------------------------------------
+
+]killvote
+}link sv killvote
+
+]sv killvote
+}syntax sv killvote
+Kills a mapvote if one is in progress or on the map change countdown
+}for server command sv
+}see for server, find sv
+
+]addmap
+}link sv addmap
+
+]sv addmap
+}syntax sv addmap <mapname>
+Adds a map to the jmodmaplist.txt file for voting use
+}for server command sv
+}see for server, find sv
+
+]removemap
+}link sv removemap
+
+]sv removemap
+}syntax sv removemap <mapname>
+Removes a map from the jmodmaplist.txt file
+}for server command sv
+}see for server, find sv
+
+]fdelete
+}link sv fdelete
+
+]sv fdelete
+}syntax sv fdelete <type> <filename>
+}syntax sv fdelete flist <type> <#>
+Deletes a puppet demo, jump trail, or marker file
+<type> can be marker, trail, or puppet
+<filename> is the file's name
+<#> is the flist number
+Be sure that nobody has saved a new file before using a flist number
+}for server command sv
+}see for server, find sv
+
+]frename
+}link sv frename
+
+]sv frename
+}syntax sv frename <type> <filename> <new_filename>
+}syntax sv frename flist <type> <#> <new_filename>
+Renames a puppet demo, jump trail, or marker file
+<type> can be marker, trail, or puppet
+<filename> is the file's current name
+<#> is the flist number
+<new_filename> is the file's target name
+Be sure that nobody has saved a new file before using a flist number
+If the target filename exists, no rename will be performed
+}for server command sv
+}see for server, find sv
+
+/----------------------------------------------
+/  SERVER COMMANDS                      END
+/----------------------------------------------
+
+
+/----------------------------------------------
+/  SERVER CVARS                         START
+/----------------------------------------------
+
+]maxpuppetdemolength
+}syntax maxpuppetdemolength <#>
+Sets the maximum recording length for puppet demos
+This does not affect playback of puppet demos longer than this value
+Default 30
+
+]puppetdemosmoothing
+}syntax puppetdemosmoothing <0/1>
+Enables puppet demo smoothing which results in smooth puppet playback at speeds slower than 1x
+Default 1
+
+
+]mapvoting
+}syntax mapvoting <0/1>
+Disable or Enable map voting
+Note that there is no map rotation support, so this should be enabled for public servers
+Default 1
+
+]mapvotingtime
+}syntax mapvotingtime <#>
+Amount of time between a map vote success and the level change
+This is to allow people to finish what they were doing if they were not completely ready
+If a vote passes at 100%, the map will change immediately
+Default 15
+
+]mapvotingpercent
+}syntax mapvotingpercent <#>
+Percent that must be reached for map voting
+If you want a majority rule, set this to 51 or higher
+Default 50
+
+
+]notelefx
+}syntax notelefx <0/1>
+Enabled or Disable the extra teleportation effect
+This effect has been known to cause problems in demo editing so it has been defaulted to off
+Default 1
+
+
+]knifelimit
+}syntax knifelimit <#>
+Sets the maximum number of knives that can be thrown before they start disappearing
+This is to help reduce flooding
+Default 10
+
+]markerlimit
+}syntax markerlimit <#>
+Sets the maximum number of markers that may be placed on the map at any given time
+When this limit is reached, markers must be removed before more can be placed
+Default 100
+
+]traillimit
+}syntax traillimit <#>
+Sets the maximum number of trail links that can be placed on the map at any given time
+When this limit is reached, trail links must be removed before more can be placed
+Default 100
+
+
+]jmodversion
+}syntax jmodversion
+Displays the current ^J Mod version
+This is visible to game browsers
+
+
+]weaponban
+}syntax weaponban <#>
+Bans FIRING/USAGE of certain weapons/items, but does not prevent weapon selection
+
+To ban weapons, take their values and add them together.
+EX: To ban the m4, mp5, and shotgun: 16+1+2=19: weaponban 19
+
+MP5/10 Submachinegun        1
+M3 Super90 Assault Shotgun  2
+Handcannon                  4
+SSG 3000 Sniper Rifle       8
+M4 Assault Rifle            16
+Combat Knives               32
+Akimbo Pistols              64
+MK23 Pistol                 128
+Jump Marker                 256
+Jump Trail                  512
+Grenades                    1024
+
+Quick Ban Numbers
+1279 - ban all weapons except markers and trails
+2047 - ban everything
+
+default 0
+
+
+]nohud
+}syntax nohud <0/1>
+Disable or Enable the HUD
+This affects all people on the server and requires a map restart
+HUD toggle commands should be used per client instead of this
+Default 0
+
+/----------------------------------------------
+/  SERVER CVARS                         END
+/----------------------------------------------
+
+
+/----------------------------------------------
+/  EXTRAS                               START
+/----------------------------------------------
+
+]menu
+}link inven
+
+
+]jloc
+}link marker
+
+]jump marker
+}link marker
+
+]marker
+Markers are used to visually mark locations on a map
+They can be used to show when and where to jump, or to point out objects
+}for marker
+}see for marker, files
+
+]use jump marker
+}syntax use jump marker
+This selects the jump marker placement weapon
+When you fire, a marker is placed where you were aiming
+The marker flies to its location so people can see where you placed it
+Use the weapon's alternate firing mode for removing markers
+In removal mode, point at markers and they will become highlighted if they will be removed after firing
+}for marker
+}see for marker, find mark
+
+
+]jtrail
+}link trail
+
+]trail
+Trails show a path of movement through laser lines
+They can be a really helpful aid in learning jumps
+Trails can also be created from saved puppet demos
+}for trail
+}see tog trailing, for trail, find trail, files
+
+
+]pdemo
+}link puppet demo
+
+]puppetdemo
+}link puppet demo
+
+]puppet demo
+Puppet demos are recordings of player movement, much like quake2 demo files
+Puppet demos can be played back in realtime and even spectated
+They can also be played back at different speeds and even stepped through frame by frame forward or backward
+}for puppet
+}see for playback, for puppet, files
+
+
+]files
+When you issue a command to save something (markers, trails, puppetdemo), that file is saved to the server
+If the server allows downloading, you may download these saved files to your computer
+}for file download save
+}see fdownload, flist, fload, msave, tsave, psave
+
+
+]id
+}link player id
+
+]player id
+A player's ID can be found on the score listing, and can be used in some commands
+}see score
+}for player info
+
+/----------------------------------------------
+/  EXTRAS                               END
+/----------------------------------------------
+
