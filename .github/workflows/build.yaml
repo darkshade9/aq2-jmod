@@ -15,7 +15,7 @@ env:
 
 jobs:
   x86_build_jmod:
-    runs-on: [self-hosted, x86]
+    runs-on: [ubuntu-latest]
     steps:
       - name: 'Cleanup build folder'
         run: |
@@ -83,27 +83,27 @@ jobs:
           path: |
             build/gamex86_64.so
 
-  arm64_build_jmod:
-    runs-on: [self-hosted, ARM64]
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: darkshade9/aq2-jmod
-          ref: ${{ github.ref }}
-          path: build
+  # arm64_build_jmod:
+  #   runs-on: [self-hosted, ARM64]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         repository: darkshade9/aq2-jmod
+  #         ref: ${{ github.ref }}
+  #         path: build
 
-      - name: Build JMOD (Linux ARM64)
-        working-directory: build/src
-        run: make -j4 V=1 && mv gameaarch64.so ../gameaarch64.so
-        env:
-          CC: "gcc"
+  #     - name: Build JMOD (Linux ARM64)
+  #       working-directory: build/src
+  #       run: make -j4 V=1 && mv gameaarch64.so ../gameaarch64.so
+  #       env:
+  #         CC: "gcc"
 
-      - name: Generate archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: jmod-lin-arm64
-          path: |
-            build/gameaarch64.so
+  #     - name: Generate archive
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: jmod-lin-arm64
+  #         path: |
+  #           build/gameaarch64.so
 
   darwin_build_jmod:
     runs-on: macos-latest
@@ -116,7 +116,7 @@ jobs:
 
       - name: Build JMOD (Darwin x86_64)
         working-directory: build/src
-        run: make -j4 V=1 && mv gamex86_64.dylib ../gamex86_64.dylib
+        run: make -j4 V=1 && mv gamex86_64.so ../gamex86_64.so
         env:
           CC: "gcc"
 
@@ -125,15 +125,15 @@ jobs:
         with:
           name: jmod-darwin-x86_64
           path: |
-            build/gamex86_64.dylib
+            build/gamex86_64.so
 
       - name: Build JMOD (Darwin ARM64)
         working-directory: build/src
-        run: make clean && make -j4 V=1 && mv gamearm.dylib ../gamearm64.dylib
+        run: make clean && make -j4 V=1 && mv gamearm.so ../gamearm64.so
 
       - name: Generate archive
         uses: actions/upload-artifact@v3
         with:
           name: jmod-darwin-arm64
           path: |
-            build/gamearm64.dylib
+            build/gamearm64.so
