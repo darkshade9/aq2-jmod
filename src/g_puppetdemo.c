@@ -1650,7 +1650,7 @@ void CreatePuppetDemoFile (edict_t *ent)
 	int playernum;
 	
 	playernum = ent-g_edicts-1;
-	itoa(playernum,buffer,10);
+	sprintf(playernum,buffer,10);
 	strcpy(PDFile,GAMEVERSION "/puppetdemo");
 	p_mkdir(PDFile);
 
