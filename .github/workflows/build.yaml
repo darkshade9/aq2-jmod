@@ -35,37 +35,37 @@ jobs:
         working-directory: build
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-      - name: Download mingw package
-        working-directory: build
-        run: |
-          wget -nv https://github.com/skullernet/q2pro-mgw-sdk/releases/download/2022-06-14/q2pro-mgw-sdk.tar.gz
-          tar xf q2pro-mgw-sdk.tar.gz
+      # - name: Download mingw package
+      #   working-directory: build
+      #   run: |
+      #     wget -nv https://github.com/skullernet/q2pro-mgw-sdk/releases/download/2022-06-14/q2pro-mgw-sdk.tar.gz
+      #     tar xf q2pro-mgw-sdk.tar.gz
 
-      - name: Build JMOD (Win 64-bit)
-        working-directory: build/src
-        run: make -j4 V=1 && mv gamex86_64.dll ../gamex86_64.dll
-        env:
-          CC: x86_64-w64-mingw32-gcc
+      # - name: Build JMOD (Win 64-bit)
+      #   working-directory: build/src
+      #   run: make -j4 V=1 && mv gamex86_64.dll ../gamex86_64.dll
+      #   env:
+      #     CC: x86_64-w64-mingw32-gcc
 
-      - name: Generate Win64 archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: jmod-win-64
-          path: |
-            build/gamex86_64.dll
+      # - name: Generate Win64 archive
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: jmod-win-64
+      #     path: |
+      #       build/gamex86_64.dll
 
-      - name: Build JMOD (Win 32-bit)
-        working-directory: build/src
-        run: make clean && make -j4 V=1 && mv gamex86.dll ../gamex86.dll
-        env:
-          CC: x86_64-w64-mingw32-gcc-win32
+      # - name: Build JMOD (Win 32-bit)
+      #   working-directory: build/src
+      #   run: make clean && make -j4 V=1 && mv gamex86.dll ../gamex86.dll
+      #   env:
+      #     CC: x86_64-w64-mingw32-gcc-win32
 
-      - name: Generate Win32 archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: jmod-win-32
-          path: |
-            build/gamex86.dll
+      # - name: Generate Win32 archive
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: jmod-win-32
+      #     path: |
+      #       build/gamex86.dll
 
       - name: Build JMOD (Linux 64-bit)
         working-directory: build/src
