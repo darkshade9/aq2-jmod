@@ -45,8 +45,7 @@ jobs:
         working-directory: build/src
         run: make -j4 V=1 && mv gamex86_64.dll ../gamex86_64.dll
         env:
-          JMOD_BUILD_FOR: "WIN64"
-          USE_AQTION: "TRUE"
+          CC: x86_64-w64-mingw32-gcc
 
       - name: Generate Win64 archive
         uses: actions/upload-artifact@v3
@@ -59,8 +58,7 @@ jobs:
         working-directory: build/src
         run: make clean && make -j4 V=1 && mv gamex86.dll ../gamex86.dll
         env:
-          JMOD_BUILD_FOR: "WIN32"
-          USE_AQTION: "TRUE"
+          CC: x86_64-w64-mingw32-gcc-win32
 
       - name: Generate Win32 archive
         uses: actions/upload-artifact@v3
@@ -127,13 +125,13 @@ jobs:
           path: |
             build/gamex86_64.so
 
-      - name: Build JMOD (Darwin ARM64)
-        working-directory: build/src
-        run: make clean && make -j4 V=1 && mv gamearm.so ../gamearm64.so
+      # - name: Build JMOD (Darwin ARM64)
+      #   working-directory: build/src
+      #   run: make clean && make -j4 V=1 && mv gamearm.so ../gamearm64.so
 
-      - name: Generate archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: jmod-darwin-arm64
-          path: |
-            build/gamearm64.so
+      # - name: Generate archive
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: jmod-darwin-arm64
+      #     path: |
+      #       build/gamearm64.so
